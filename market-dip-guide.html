@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390, initial-scale=1.0">
+<title>하락장 개념 정리 + ETF 종류 | 쭈미의 재테크</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --beige:      #FDF8F3;
+  --beige-card: #FFFFFF;
+  --beige-deep: #F2EBE0;
+  --beige-line: #E6DDD2;
+  --beige-text: #9A8878;
+  --coral:      #F07B68;
+  --coral-bg:   #FEF0ED;
+  --coral-mid:  #F9C4BB;
+  --coral-dark: #7A3020;
+  --lav:        #9B8FDF;
+  --lav-bg:     #F2F0FF;
+  --lav-mid:    #CEC8F7;
+  --lav-dark:   #3A2A80;
+  --charcoal:   #2C2418;
+  --radius:     14px;
+  --radius-sm:  9px;
+  --w:          390px;
+  --px:         18px;
+}
+
+html, body {
+  width: var(--w);
+  margin: 0 auto;
+  background: var(--beige);
+  color: var(--charcoal);
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* ── HEADER ── */
+.header {
+  width: var(--w);
+  background: var(--charcoal);
+  padding: 40px var(--px) 44px;
+  text-align: center;
+  position: relative;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 18px;
+  background: var(--beige);
+  border-radius: 18px 18px 0 0;
+}
+.header-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.10);
+  color: #AA9988;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFF;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.header h1 em { font-style: normal; color: var(--coral); }
+.header-sub { font-size: 13px; color: #AA9988; }
+
+/* ── WRAP ── */
+.wrap {
+  width: var(--w);
+  padding: 6px var(--px) 56px;
+}
+
+/* ── SECTION LABEL ── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 28px 0 12px;
+}
+.section-label .num {
+  background: var(--charcoal);
+  color: #FFF;
+  font-size: 12px;
+  font-weight: 700;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.section-label .num.c { background: var(--coral); }
+.section-label .num.l { background: var(--lav); }
+.section-label .title { font-size: 17px; font-weight: 700; }
+
+/* ── CARD ── */
+.card {
+  background: var(--beige-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--beige-line);
+  padding: 16px 14px;
+  margin-bottom: 10px;
+}
+
+/* ── CALLOUT ── */
+.callout {
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-bottom: 10px;
+}
+.callout-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  display: block;
+}
+.callout.dk { background: var(--charcoal); color: #CCB8A8; }
+.callout.dk .callout-title { color: #FFF; }
+.callout.dk strong { color: var(--coral); }
+.callout.co { background: var(--coral-bg); color: var(--coral-dark); border-left: 3px solid var(--coral); }
+.callout.co .callout-title { color: var(--coral); }
+.callout.lv { background: var(--lav-bg); color: var(--lav-dark); border-left: 3px solid var(--lav); }
+.callout.lv .callout-title { color: var(--lav); }
+.callout.lv strong { color: var(--lav-dark); }
+.callout.ol { background: var(--beige-card); border: 1.5px solid var(--beige-line); color: var(--charcoal); }
+.callout.ol .callout-title { color: var(--charcoal); }
+
+/* ── BADGE ── */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-bottom: 7px;
+}
+.badge.dk { background: var(--charcoal); color: #FFF; }
+.badge.co { background: var(--coral-bg); color: var(--coral); border: 1.5px solid var(--coral-mid); }
+.badge.lv { background: var(--lav-bg); color: var(--lav); border: 1.5px solid var(--lav-mid); }
+.badge.ol { background: var(--beige-card); color: var(--charcoal); border: 1.5px solid var(--beige-line); }
+
+/* ── ROW LIST ── */
+.row-list { display: flex; flex-direction: column; gap: 8px; }
+.row-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--beige-deep);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.row-item .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.row-item .r-label { font-weight: 700; font-size: 14px; margin-bottom: 2px; color: var(--charcoal); }
+.row-item .r-desc  { font-size: 13px; color: var(--beige-text); line-height: 1.6; }
+
+/* ── COMPARE STACK ── */
+.compare-stack { display: flex; flex-direction: column; gap: 7px; margin-top: 6px; }
+.compare-cell {
+  border-radius: var(--radius-sm);
+  padding: 13px 12px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.compare-cell .cell-title { font-weight: 700; font-size: 14px; margin-bottom: 5px; }
+.compare-cell.lv-cell  { background: var(--lav-bg);    color: var(--lav-dark); }
+.compare-cell.lv-cell  .cell-title { color: var(--lav); }
+.compare-cell.co-cell  { background: var(--coral-bg);  color: var(--coral-dark); }
+.compare-cell.co-cell  .cell-title { color: var(--coral); }
+.compare-cell.dk-cell  { background: var(--charcoal);  color: #CCB8A8; }
+.compare-cell.dk-cell  .cell-title { color: #FFF; }
+.compare-cell.gy-cell  { background: var(--beige-deep); border: 1px solid var(--beige-line); color: var(--charcoal); }
+.compare-cell.gy-cell  .cell-title { color: var(--charcoal); }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--beige-line); margin: 12px 0; }
+
+/* ── JJUMI BOX ── */
+.jjumi-box {
+  background: var(--lav-bg);
+  border-radius: var(--radius-sm);
+  padding: 12px 13px;
+  font-size: 14px;
+  color: var(--lav-dark);
+  line-height: 1.7;
+  margin-top: 10px;
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  border-left: 3px solid var(--lav);
+}
+.jjumi-box strong { color: var(--lav); }
+.jjumi-box .ji { flex-shrink: 0; font-size: 16px; margin-top: 1px; }
+
+/* ── ETF CARD ── */
+.etf-card {
+  background: var(--beige-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--beige-line);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.etf-head { padding: 14px 16px 12px; border-bottom: 1px solid var(--beige-line); }
+.etf-head.lv-head  { border-left: 4px solid var(--lav); }
+.etf-head.lv-head  .etf-name { color: var(--charcoal); }
+.etf-head.lv-head  .etf-sub  { color: var(--beige-text); }
+.etf-head.co-head  { background: var(--coral-bg); border-left: 4px solid var(--coral); }
+.etf-head.co-head  .etf-name { color: var(--coral); }
+.etf-head.co-head  .etf-sub  { color: #AA5540; }
+.etf-name { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+.etf-sub  { font-size: 13px; }
+.etf-body { padding: 4px 16px 2px; }
+.etf-row {
+  padding: 11px 0;
+  border-bottom: 1px solid var(--beige-line);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.etf-row:last-child { border-bottom: none; }
+.etf-key { font-size: 11px; font-weight: 700; color: var(--beige-text); letter-spacing: 0.04em; margin-bottom: 3px; }
+.etf-val { color: var(--charcoal); }
+.ok  { color: var(--lav);   font-weight: 700; }
+.bad { color: var(--coral); font-weight: 700; }
+
+/* ── 수치 비교표 ── */
+.vol-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 8px;
+}
+.vol-table th {
+  padding: 7px 4px;
+  text-align: center;
+  border-bottom: 2px solid var(--beige-line);
+  color: var(--beige-text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.vol-table th:first-child { text-align: left; }
+.vol-table td {
+  padding: 9px 4px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--charcoal);
+}
+.vol-table td:first-child { text-align: left; font-weight: 700; white-space: nowrap; }
+.vol-table .lv-row td:first-child { color: var(--lav-dark); }
+.vol-table .co-row td:first-child { color: var(--coral-dark); }
+.vol-table .lv-row { background: var(--lav-bg); }
+.vol-table .co-row { background: var(--coral-bg); }
+.vol-table .result-lv { font-weight: 700; color: var(--lav); }
+.vol-table .result-co { font-weight: 700; color: var(--coral); }
+
+/* ── SUMMARY ── */
+.summary-row {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--beige-line);
+  gap: 10px;
+  font-size: 14px;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+.summary-info { flex: 1; }
+.summary-info strong { font-size: 14px; }
+.summary-info .s-desc { font-size: 12px; color: var(--beige-text); margin-top: 2px; line-height: 1.5; }
+
+/* ── MISTAKE ── */
+.mistake-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--beige-line);
+  font-size: 14px;
+}
+.mistake-item:last-child { border-bottom: none; }
+.x-badge {
+  background: var(--coral-bg);
+  color: var(--coral);
+  border: 1.5px solid var(--coral-mid);
+  font-size: 12px; font-weight: 700;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.m-main { font-weight: 700; color: var(--charcoal); margin-bottom: 2px; font-size: 14px; }
+.m-why  { font-size: 13px; color: var(--beige-text); line-height: 1.55; }
+
+/* ── PRINCIPLE ── */
+.principle-item { display: flex; align-items: flex-start; gap: 9px; }
+.principle-num {
+  width: 28px; height: 28px;
+  background: var(--lav-bg);
+  color: var(--lav);
+  border: 1.5px solid var(--lav-mid);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0; margin-top: 2px;
+}
+.principle-input {
+  flex: 1;
+  min-height: 48px;
+  background: var(--beige-deep);
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--beige-line);
+  padding: 11px 12px;
+  font-size: 14px;
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  color: var(--charcoal);
+  line-height: 1.6;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.principle-input:focus { border-color: var(--lav); background: var(--beige-card); }
+.principle-input:empty::before { content: attr(placeholder); color: #C8B8A8; pointer-events: none; }
+
+/* ── SEC META ── */
+.sec-meta { font-size: 12px; font-weight: 700; color: var(--beige-text); margin-bottom: 8px; letter-spacing: 0.04em; }
+
+/* ── FOOTER ── */
+.footer { text-align: center; padding: 28px var(--px) 44px; font-size: 13px; color: var(--beige-text); }
+.footer strong { color: var(--charcoal); display: block; font-size: 15px; margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-badge">📉 하락장 자료집 | @jjumi_s2</div>
+  <h1>떨어진 시장,<br>지금 들어가도 될까?<br><em>딱 3가지만 확인해봐</em></h1>
+  <p class="header-sub">개념 정리 + ETF 종류까지 한 번에 🐜</p>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. 왜 떨어지나 -->
+  <div class="section-label">
+    <div class="num">1</div>
+    <div class="title">시장은 왜 떨어지는 걸까?</div>
+  </div>
+  <div class="callout dk">
+    <span class="callout-title">핵심 한 줄</span>
+    시장 하락에는 항상 이유가 있어. 근데 <strong>무조건 폭락은 아니야.</strong>
+  </div>
+  <div class="card">
+    <div class="row-list">
+      <div class="row-item">
+        <span class="icon">📈</span>
+        <div><div class="r-label">금리</div><div class="r-desc">금리 인상 → 대출 비용 증가 → 기업·소비자 부담 ↑ → 주가 하락 압력</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">🌐</span>
+        <div><div class="r-label">관세·정책</div><div class="r-desc">무역 규제, 정치 리스크, 정부 정책 변화 → 수출·기업 실적 불확실성 ↑</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">🏭</span>
+        <div><div class="r-label">경기 둔화</div><div class="r-desc">고용 지표 악화, 소비 위축 → 기업 매출 감소 예상 → 주가에 선반영</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">📊</span>
+        <div><div class="r-label">기업 실적</div><div class="r-desc">어닝쇼크(예상 하회), 가이던스 하향 → 해당 종목·섹터 급락</div></div>
+      </div>
+    </div>
+    <div class="jjumi-box">
+      <span class="ji">🐜</span>
+      이 이슈들이 <strong>동시에 겹칠수록</strong> 하락 폭이 커져.<br>뉴스 하나만 보고 전부를 판단하면 안 돼!
+    </div>
+  </div>
+
+  <!-- 2. 일시적 vs 구조적 -->
+  <div class="section-label">
+    <div class="num c">2</div>
+    <div class="title">일시적 악재 vs 구조적 변화</div>
+  </div>
+  <div class="callout co">
+    <span class="callout-title">⚠️ 왜 구분해야 하냐면</span>
+    같은 하락이라도 <strong>이유가 다르면 대응이 달라.</strong><br>
+    헷갈리면 팔아야 할 때 사고, 사야 할 때 팔게 돼.
+  </div>
+  <div class="card">
+    <div class="compare-stack">
+      <div class="compare-cell lv-cell">
+        <div class="cell-title">✅ 일시적 악재</div>
+        뉴스 과민반응 · 단기 공포 심리 · 이벤트성 충격<br><strong>→ 보통 회복됨</strong>
+      </div>
+      <div class="compare-cell co-cell">
+        <div class="cell-title">⚠️ 구조적 변화</div>
+        금리 패러다임 전환 · 산업 재편 · 장기 경기침체<br><strong>→ 장기 조정 가능</strong>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <p style="font-size:14px; font-weight:700; margin-bottom:10px;">어떻게 구분해?</p>
+    <div class="row-list">
+      <div class="row-item">
+        <span class="icon">📰</span>
+        <div><div class="r-label">출처 확인</div><div class="r-desc">유튜브 공포 자극 말고 — 연준 발표, 경제지표, 기업 IR 원문 위주로</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">🕐</span>
+        <div><div class="r-label">기간 확인</div><div class="r-desc">하루 이틀 뉴스인가, 수개월째 이어지는 흐름인가</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">🌍</span>
+        <div><div class="r-label">범위 확인</div><div class="r-desc">특정 종목·섹터만 빠지는가, 전체 시장이 다 빠지는가</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 분할매수 -->
+  <div class="section-label">
+    <div class="num l">3</div>
+    <div class="title">분할매수란?</div>
+  </div>
+  <div class="callout lv">
+    <span class="callout-title">💡 핵심 개념</span>
+    바닥은 아무도 몰라.<br>한 번에 전부 사는 대신 <strong>나눠서 여러 번 사는 전략</strong>이야.
+  </div>
+  <div class="card">
+    <p style="font-size:14px; font-weight:700; margin-bottom:10px;">왜 분할매수가 좋아?</p>
+    <div class="row-list">
+      <div class="row-item">
+        <span class="icon">📉</span>
+        <div><div class="r-label">평단가 낮추기</div><div class="r-desc">여러 가격에 나눠 사면 평균 매입 단가가 낮아져 손익분기점이 내려가</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">🧘</span>
+        <div><div class="r-label">심리 안정</div><div class="r-desc">한 번에 다 샀다가 더 빠지면 멘탈이 흔들려.<br>나눠 사면 여유가 생겨</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">🎯</span>
+        <div><div class="r-label">리스크 분산</div><div class="r-desc">최악의 타이밍에 전액을 쏟아붓는 실수를 줄여줘</div></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <p style="font-size:14px; font-weight:700; margin-bottom:10px;">분할매수 예시</p>
+    <div class="compare-stack">
+      <div class="compare-cell dk-cell"><div class="cell-title">1차 매수</div>지금 바로 — 투자금의 1/3</div>
+      <div class="compare-cell dk-cell"><div class="cell-title">2차 매수</div>-5% 하락 시 — 투자금의 1/3</div>
+      <div class="compare-cell dk-cell"><div class="cell-title">3차 매수</div>추가 하락 시 — 투자금의 1/3</div>
+      <div class="compare-cell gy-cell"><div class="cell-title">🔑 핵심</div>기준을 <strong>감정 아닌 숫자</strong>로 미리 정해두기</div>
+    </div>
+    <div class="jjumi-box">
+      <span class="ji">🐜</span>
+      분할매수도 <strong>잃어도 되는 돈</strong>으로만!<br>생활비·비상금은 절대 손대면 안 돼.
+    </div>
+  </div>
+
+  <!-- 4. ETF 종류 -->
+  <div class="section-label" style="margin-top:32px;">
+    <div class="num l">4</div>
+    <div class="title">ETF 종류 총정리 📊</div>
+  </div>
+  <div class="callout dk">
+    <span class="callout-title">먼저 알아야 할 것</span>
+    이름이 비슷해도 움직임이 <strong>완전히 다를 수 있어.</strong><br>
+    사기 전에 내가 뭘 사는지 꼭 확인해!
+  </div>
+
+  <!-- 일반 ETF -->
+  <div class="etf-card">
+    <div class="etf-head lv-head">
+      <div class="badge lv">기본형</div>
+      <div class="etf-name">일반 ETF (인덱스 ETF)</div>
+      <div class="etf-sub">지수를 그대로 따라가는 ETF</div>
+    </div>
+    <div class="etf-body">
+      <div class="etf-row"><div class="etf-key">움직임</div><div class="etf-val">지수 상승 → ETF도 상승 / 지수 하락 → ETF도 하락 (1배)</div></div>
+      <div class="etf-row"><div class="etf-key">예시</div><div class="etf-val">KODEX 200, TIGER S&P500, ACE 나스닥100</div></div>
+      <div class="etf-row"><div class="etf-key">장기보유</div><div class="etf-val"><span class="ok">✔ 가능</span> — 장기 우상향 기대</div></div>
+      <div class="etf-row"><div class="etf-key">추천 대상</div><div class="etf-val">투자 처음이거나, 시장 수익률을 안정적으로 따르고 싶은 사람</div></div>
+    </div>
+    <div class="jjumi-box" style="margin:0 14px 14px;">
+      <span class="ji">🐜</span>
+      초보라면 <strong>여기서 시작해.</strong> 지수가 오르면 나도 오르고, 내리면 같이 내리는 구조야.
+    </div>
+  </div>
+
+  <!-- 레버리지 ETF -->
+  <div class="etf-card">
+    <div class="etf-head co-head">
+      <div class="badge co">고위험형</div>
+      <div class="etf-name">레버리지 ETF</div>
+      <div class="etf-sub">지수 움직임의 2배로 추종</div>
+    </div>
+    <div class="etf-body">
+      <div class="etf-row"><div class="etf-key">움직임</div><div class="etf-val">지수 +1% → ETF <span class="ok">+2%</span> &nbsp;/&nbsp; 지수 -1% → ETF <span class="bad">-2%</span></div></div>
+      <div class="etf-row"><div class="etf-key">예시</div><div class="etf-val">KODEX 200선물레버리지, TIGER 나스닥100레버리지</div></div>
+      <div class="etf-row"><div class="etf-key">장기보유</div><div class="etf-val"><span class="bad">✗ 위험</span> — 변동성 손실로 원금이 녹을 수 있어</div></div>
+      <div class="etf-row"><div class="etf-key">이름 구분</div><div class="etf-val">이름에 <strong>"2X", "레버", "LEVERAGE"</strong> 포함 여부 확인</div></div>
+    </div>
+    <div class="callout co" style="margin:0 14px 10px;">
+      <span class="callout-title">⚠️ 변동성 손실이란?</span>
+      지수가 +10% 올랐다가 -10% 빠지면 원금이 그대로일 것 같지만, 레버리지는 손실이 더 크게 누적돼. 횡보장에서도 원금이 서서히 녹는 이유야.
+    </div>
+    <div style="padding: 0 14px 14px;">
+      <p class="sec-meta">📊 같은 등락인데 결과가 달라요</p>
+      <table class="vol-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>①시작</th>
+            <th>②+10%</th>
+            <th>③-10%</th>
+            <th>④+10%</th>
+            <th>⑤-10%</th>
+            <th>결과</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="lv-row">
+            <td>일반 ETF</td>
+            <td>100</td><td>110</td><td>99</td><td>108.9</td><td>98.0</td>
+            <td class="result-lv">98.0</td>
+          </tr>
+          <tr style="height:5px;"></tr>
+          <tr class="co-row">
+            <td>레버리지</td>
+            <td>100</td><td>120</td><td>96</td><td>115.2</td><td>92.2</td>
+            <td class="result-co">92.2</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px; color:var(--beige-text); margin-top:7px; line-height:1.55;">같은 등락 반복인데 일반 ETF <strong style="color:var(--lav);">98원</strong> vs 레버리지 <strong style="color:var(--coral);">92.2원</strong>. 변동이 클수록 차이가 벌어져.</p>
+    </div>
+  </div>
+
+  <!-- 인버스 ETF -->
+  <div class="etf-card">
+    <div class="etf-head lv-head">
+      <div class="badge lv">역방향형</div>
+      <div class="etf-name">인버스 ETF</div>
+      <div class="etf-sub">지수가 내려갈 때 수익 나는 ETF</div>
+    </div>
+    <div class="etf-body">
+      <div class="etf-row"><div class="etf-key">움직임</div><div class="etf-val">지수 -1% → ETF <span class="ok">+1%</span> &nbsp;/&nbsp; 지수 +1% → ETF <span class="bad">-1%</span></div></div>
+      <div class="etf-row"><div class="etf-key">예시</div><div class="etf-val">KODEX 200선물인버스, TIGER 200선물인버스</div></div>
+      <div class="etf-row"><div class="etf-key">언제 써?</div><div class="etf-val">시장이 빠질 거라 예상할 때 — <strong>단기 헤지(위험 방어)</strong> 용도</div></div>
+      <div class="etf-row"><div class="etf-key">장기보유</div><div class="etf-val"><span class="bad">✗ 위험</span> — 장기 우상향 시장에서 계속 손해</div></div>
+    </div>
+    <div class="jjumi-box" style="margin:0 14px 14px;">
+      <span class="ji">🐜</span>
+      "시장이 떨어질 것 같은데 수익 내고 싶다"는 단기 전략용. <strong>초보에겐 비추야.</strong>
+    </div>
+  </div>
+
+  <!-- 인버스 2X -->
+  <div class="etf-card">
+    <div class="etf-head co-head">
+      <div class="badge co">초고위험형</div>
+      <div class="etf-name">인버스 2X ETF</div>
+      <div class="etf-sub">지수 하락폭의 2배 수익 (반대 방향 레버리지)</div>
+    </div>
+    <div class="etf-body">
+      <div class="etf-row"><div class="etf-key">움직임</div><div class="etf-val">지수 -1% → ETF <span class="ok">+2%</span> &nbsp;/&nbsp; 지수 +1% → ETF <span class="bad">-2%</span></div></div>
+      <div class="etf-row"><div class="etf-key">예시</div><div class="etf-val">KODEX 200선물인버스2X</div></div>
+      <div class="etf-row"><div class="etf-key">리스크</div><div class="etf-val">레버리지 + 인버스 결합 → <span class="bad">손실 속도 가장 빠름</span></div></div>
+    </div>
+    <div class="callout co" style="margin:0 14px 14px;">
+      <span class="callout-title">🙅 초보는 쳐다도 보지 마</span>
+      시장이 예상과 반대로 움직이면 손실이 순식간에 2배야. 전문 트레이더도 신중하게 쓰는 상품이야.
+    </div>
+  </div>
+
+  <!-- 한눈에 비교 -->
+  <div class="section-label">
+    <div class="num" style="font-size:14px;">≡</div>
+    <div class="title">한눈에 비교</div>
+  </div>
+  <div class="card">
+    <div class="summary-row">
+      <div class="summary-dot" style="background:var(--lav);"></div>
+      <div class="summary-info"><strong>일반 ETF</strong><div class="s-desc">지수 1배 추종 · 장기보유 OK · 초보 추천</div></div>
+      <div class="badge lv" style="margin:0; flex-shrink:0; align-self:flex-start;">기본형</div>
+    </div>
+    <div class="summary-row">
+      <div class="summary-dot" style="background:var(--coral);"></div>
+      <div class="summary-info"><strong>레버리지 ETF</strong><div class="s-desc">지수 2배 추종 · 장기보유 위험 · 단기 트레이딩용</div></div>
+      <div class="badge co" style="margin:0; flex-shrink:0; align-self:flex-start;">고위험</div>
+    </div>
+    <div class="summary-row">
+      <div class="summary-dot" style="background:var(--lav);"></div>
+      <div class="summary-info"><strong>인버스 ETF</strong><div class="s-desc">하락 시 수익 · 헤지 목적 · 단기용</div></div>
+      <div class="badge lv" style="margin:0; flex-shrink:0; align-self:flex-start;">역방향</div>
+    </div>
+    <div class="summary-row">
+      <div class="summary-dot" style="background:var(--coral);"></div>
+      <div class="summary-info"><strong>인버스 2X ETF</strong><div class="s-desc">하락 2배 수익 · 손실도 2배 · 초보 비추</div></div>
+      <div class="badge co" style="margin:0; flex-shrink:0; align-self:flex-start;">초고위험</div>
+    </div>
+  </div>
+
+  <!-- 5. 초보 실수 -->
+  <div class="section-label" style="margin-top:28px;">
+    <div class="num c">!</div>
+    <div class="title">초보가 가장 많이 하는 실수</div>
+  </div>
+  <div class="card">
+    <div class="mistake-item">
+      <div class="x-badge">✗</div>
+      <div><div class="m-main">하루 떨어졌다고 전액 매도</div><div class="m-why">단기 노이즈에 반응하면 저점에 팔고 반등을 놓쳐</div></div>
+    </div>
+    <div class="mistake-item">
+      <div class="x-badge">✗</div>
+      <div><div class="m-main">하루 올랐다고 추격매수</div><div class="m-why">고점 추격은 평단을 올리고 다음 하락 때 손실을 키워</div></div>
+    </div>
+    <div class="mistake-item">
+      <div class="x-badge">✗</div>
+      <div><div class="m-main">레버리지 ETF 장기보유</div><div class="m-why">횡보장에서도 변동성 손실로 원금이 서서히 녹아</div></div>
+    </div>
+    <div class="mistake-item">
+      <div class="x-badge">✗</div>
+      <div><div class="m-main">ETF 이름만 보고 사기</div><div class="m-why">"나스닥100"이라도 레버리지 여부에 따라 리스크가 완전히 달라</div></div>
+    </div>
+  </div>
+  <div class="callout lv" style="margin-top:4px;">
+    <span class="callout-title">🐜 쭈미의 한마디</span>
+    주식은 <strong>타이밍보다 실수를 줄이는 게 더 중요해.</strong><br>
+    시장이 흔들릴 때 흔들리지 않으려면 — 내 원칙을 미리 만들어둬야 해.
+  </div>
+
+  <!-- 6. 내 투자 원칙 -->
+  <div class="section-label" style="margin-top:32px;">
+    <div class="num l">6</div>
+    <div class="title">내 투자 원칙 만들기</div>
+  </div>
+  <div class="callout ol">
+    <span class="callout-title">✏️ 이렇게 써봐</span>
+    원칙이 있으면 시장이 흔들려도<br>감정이 아닌 <strong>기준으로 판단</strong>할 수 있어.<br>아래 쭈미 원칙 참고해서 나만의 원칙을 만들어봐!
+  </div>
+
+  <p class="sec-meta">🐜 쭈미의 투자 원칙 (예시)</p>
+  <div class="card" style="margin-bottom:14px;">
+    <div class="row-list">
+      <div class="row-item">
+        <span class="icon">①</span>
+        <div><div class="r-label">빚투 안 하기</div><div class="r-desc">자산의 일부만 투자하고, 대출·카드론으로 투자하면 하락 시 버틸 수가 없어.</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">②</span>
+        <div><div class="r-label">우량 ETF를 장기투자</div><div class="r-desc">나스닥100·S&P500 같은 지수 ETF 분할매수 후 장기 보유. 중간에 빠져도 안 팔아.</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">③</span>
+        <div><div class="r-label">추가매수 기준 정하기</div><div class="r-desc">-10% 빠지면 추가 매수처럼, 기준을 감정이 아닌 숫자로 미리 정해두기.</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">④</span>
+        <div><div class="r-label">초보일 땐 레버리지 피하기</div><div class="r-desc">수익률 욕심보다 손실 최소화가 먼저. 레버리지·인버스 ETF는 매수하지 않아.</div></div>
+      </div>
+      <div class="row-item">
+        <span class="icon">⑤</span>
+        <div><div class="r-label">공포보다 원인 보기</div><div class="r-desc">일시적 악재인지, 구조적 변화인지 구분하고 나만의 투자 원칙을 지키기.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-meta">✏️ 나만의 투자 원칙</p>
+  <div class="card">
+    <p style="font-size:13px; color:var(--beige-text); margin-bottom:14px; line-height:1.6;">
+      아래 칸에 직접 눌러서 내 원칙을 써봐.<br>저장은 안 되니까 스크린샷 찍어두는 걸 추천해 📸
+    </p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <div class="principle-item"><div class="principle-num">①</div><div contenteditable="true" class="principle-input" placeholder="나의 첫 번째 투자 원칙을 써봐"></div></div>
+      <div class="principle-item"><div class="principle-num">②</div><div contenteditable="true" class="principle-input" placeholder="나의 두 번째 투자 원칙을 써봐"></div></div>
+      <div class="principle-item"><div class="principle-num">③</div><div contenteditable="true" class="principle-input" placeholder="나의 세 번째 투자 원칙을 써봐"></div></div>
+      <div class="principle-item"><div class="principle-num">④</div><div contenteditable="true" class="principle-input" placeholder="나의 네 번째 투자 원칙을 써봐"></div></div>
+      <div class="principle-item"><div class="principle-num">⑤</div><div contenteditable="true" class="principle-input" placeholder="나의 다섯 번째 투자 원칙을 써봐"></div></div>
+    </div>
+  </div>
+
+  <div class="callout lv" style="margin-top:10px;">
+    <span class="callout-title">🐜 쭈미의 한마디</span>
+    원칙은 거창하지 않아도 돼. <strong>딱 한 줄도 충분해.</strong><br>
+    중요한 건 시장이 무너져도 이걸 지키는 거야.
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>🐜 @jjumi_s2</strong>
+  쭈미의 2030 우당탕탕 재테크 생존기<br>마이쭈와 함께해요 ☺️
+</div>
+
+</body>
+</html>
